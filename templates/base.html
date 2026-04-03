@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ _('app_name') }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="{{ url_for('index') }}" class="nav-brand">{{ _('app_name') }}</a>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    {% for l in SUPPORTED_LANGUAGES %}
+                    {% if l == lang %}
+                    <span class="lang-active">{{ l.upper() }}</span>
+                    {% else %}
+                    <a href="{{ url_for('set_language', lang=l) }}" class="lang-link">{{ l.upper() }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% if current_user.is_authenticated %}
+                <div class="nav-links">
+                    <a href="{{ url_for('builder') }}">{{ _('builder') }}</a>
+                    <a href="{{ url_for('library') }}">{{ _('library') }}</a>
+                    <a href="{{ url_for('logout') }}" class="nav-logout">{{ _('logout') }}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ _(message) }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container footer">
+        <p>{{ _('app_name') }} &mdash; {{ _('craft_better') }}</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

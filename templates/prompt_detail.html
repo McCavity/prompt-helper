@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ prompt.expertise }} — {{ _('app_name') }}{% endblock %}
+
+{% block content %}
+<div class="detail-header">
+    <h1>{{ prompt.expertise }}</h1>
+    <time class="prompt-date">{{ prompt.created_at.strftime('%b %d, %Y at %H:%M') }}</time>
+</div>
+
+<div class="detail-actions">
+    <button type="button" class="btn btn-primary" id="copy-prompt" data-text="{{ prompt.assembled }}"
+            data-label-copy="{{ _('btn_copy_clipboard') }}" data-label-copied="{{ _('copied') }}">{{ _('btn_copy_clipboard') }}</button>
+    <a href="{{ url_for('prompt_copy', prompt_id=prompt.id) }}" class="btn btn-secondary">{{ _('btn_edit_new') }}</a>
+    <form method="POST" action="{{ url_for('prompt_delete', prompt_id=prompt.id) }}" class="inline-form"
+          onsubmit="return confirm('{{ _('confirm_delete') }}')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-danger">{{ _('btn_delete') }}</button>
+    </form>
+</div>
+
+<pre class="prompt-full">{{ prompt.assembled }}</pre>
+
+<a href="{{ url_for('library') }}" class="back-link">&larr; {{ _('back_library') }}</a>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

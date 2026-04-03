@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ _('login_title') }} — {{ _('app_name') }}{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <h1>{{ _('login_title') }}</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="username">{{ _('username') }}</label>
+            {{ form.username(class="form-control", placeholder=_('placeholder_username'), autofocus=true, id="username") }}
+            {% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="password">{{ _('password') }}</label>
+            {{ form.password(class="form-control", placeholder=_('placeholder_password'), id="password") }}
+            {% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="form-group form-check">
+            {{ form.remember(class="form-check-input") }}
+            <label for="remember">{{ _('remember_me') }}</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">{{ _('btn_login') }}</button>
+    </form>
+    <p class="auth-switch">{{ _('no_account') }} <a href="{{ url_for('signup') }}">{{ _('signup_link') }}</a></p>
+</div>
+{% endblock %}

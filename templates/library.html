@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ _('library_title') }} — {{ _('app_name') }}{% endblock %}
+
+{% block content %}
+<h1>{{ _('library_title') }}</h1>
+
+<form method="GET" action="{{ url_for('library') }}" class="search-form">
+    <input type="text" name="q" value="{{ search }}" class="form-control search-input" placeholder="{{ _('search_placeholder') }}">
+    <button type="submit" class="btn btn-primary">{{ _('btn_search') }}</button>
+    {% if search %}
+    <a href="{{ url_for('library') }}" class="btn btn-secondary">{{ _('btn_clear') }}</a>
+    {% endif %}
+</form>
+
+{% if prompts %}
+<div class="prompt-list">
+    {% for prompt in prompts %}
+    <a href="{{ url_for('prompt_detail', prompt_id=prompt.id) }}" class="prompt-card">
+        <span class="prompt-badge">{{ prompt.expertise }}</span>
+        <p class="prompt-preview">{{ prompt.assembled[:150] }}{% if prompt.assembled|length > 150 %}...{% endif %}</p>
+        <time class="prompt-date">{{ prompt.created_at.strftime('%b %d, %Y at %H:%M') }}</time>
+    </a>
+    {% endfor %}
+</div>
+
+{% if pagination.pages > 1 %}
+<div class="pagination">
+    {% if pagination.has_prev %}
+    <a href="{{ url_for('library', q=search, page=pagination.prev_num) }}" class="btn btn-secondary">&laquo; {{ _('previous') }}</a>
+    {% endif %}
+    <span class="page-info">{{ _('page_of', page=pagination.page, pages=pagination.pages) }}</span>
+    {% if pagination.has_next %}
+    <a href="{{ url_for('library', q=search, page=pagination.next_num) }}" class="btn btn-secondary">{{ _('next') }} &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    {% if search %}
+    <p>{{ _('no_results') }}</p>
+    {% else %}
+    <p>{{ _('no_prompts') }}</p>
+    <a href="{{ url_for('builder') }}" class="btn btn-primary">{{ _('btn_create_first') }}</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

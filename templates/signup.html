@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ _('signup_title') }} — {{ _('app_name') }}{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <h1>{{ _('signup_title') }}</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="username">{{ _('username') }}</label>
+            {{ form.username(class="form-control", placeholder=_('placeholder_username'), autofocus=true, id="username") }}
+            {% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="email">{{ _('email') }}</label>
+            {{ form.email(class="form-control", placeholder=_('placeholder_email'), id="email") }}
+            {% for error in form.email.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="password">{{ _('password') }}</label>
+            {{ form.password(class="form-control", placeholder=_('placeholder_pw_min'), id="password") }}
+            {% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">{{ _('confirm_password') }}</label>
+            {{ form.confirm_password(class="form-control", placeholder=_('placeholder_pw_repeat'), id="confirm_password") }}
+            {% for error in form.confirm_password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">{{ _('btn_signup') }}</button>
+    </form>
+    <p class="auth-switch">{{ _('has_account') }} <a href="{{ url_for('login') }}">{{ _('login_link') }}</a></p>
+</div>
+{% endblock %}

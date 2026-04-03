@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ _('builder_title') }} — {{ _('app_name') }}{% endblock %}
+
+{% block content %}
+<h1>{{ _('builder_title') }}</h1>
+
+<form method="POST" action="{{ url_for('builder') }}" class="builder-form">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <label for="field-expertise" class="form-label">{{ _('label_expertise') }}</label>
+        {{ form.expertise(class="form-control", id="field-expertise", placeholder=_('placeholder_expertise')) }}
+        {% for error in form.expertise.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="field-task" class="form-label">{{ _('label_task') }}</label>
+        {{ form.task(class="form-control", id="field-task", rows=3, placeholder=_('placeholder_task')) }}
+        {% for error in form.task.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="field-context" class="form-label">{{ _('label_context') }}</label>
+        {{ form.context(class="form-control", id="field-context", rows=5, placeholder=_('placeholder_context')) }}
+        {% for error in form.context.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="field-constraints" class="form-label">{{ _('label_constraints') }}</label>
+        {{ form.constraints(class="form-control", id="field-constraints", rows=3, placeholder=_('placeholder_constraints')) }}
+        {% for error in form.constraints.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ _('btn_save') }}</button>
+</form>
+
+<div class="preview-section">
+    <div class="preview-header">
+        <h2>{{ _('live_preview') }}</h2>
+        <button type="button" class="btn btn-secondary btn-sm" id="copy-preview"
+                data-label-copy="{{ _('btn_copy') }}" data-label-copied="{{ _('copied') }}">{{ _('btn_copy') }}</button>
+    </div>
+    <pre class="preview-text" id="preview-output" data-placeholder="{{ _('preview_placeholder') }}">{{ _('preview_placeholder') }}</pre>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}
