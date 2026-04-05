@@ -42,3 +42,19 @@ CSRF via Flask-WTF, rate limiting via Flask-Limiter (5/min on auth routes), Jinj
 ### Database
 
 SQLite in `instance/prompt_helper.db`, auto-created on first run. Tables managed by `db.create_all()` — no migration tool configured.
+
+## Organisation Context
+
+This repository is part of Henning Halfpap's personal GitHub collection, located at
+`/Users/hhalfpap/git/projects/own` on the development machine.
+
+- **Org index**: `/Users/hhalfpap/git/projects/own/org-index.json` — machine-readable
+  metadata for all repos (last commit, CLAUDE.md presence, file count, etc.)
+- **Org instructions**: `/Users/hhalfpap/git/projects/own/CLAUDE.md` — guidance for
+  cross-repo maintenance tasks (checking sync status, stale repos, etc.)
+
+For project-specific work, operate within this directory. For questions spanning
+multiple repos, consult the org index first.
+
+**Tooling rule**: Skills, plugins, and MCP servers are always installed at project level
+(`.claude/settings.json` in this directory), never at user/global level.
